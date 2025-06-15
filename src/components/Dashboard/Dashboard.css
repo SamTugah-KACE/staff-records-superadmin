@@ -1,0 +1,16 @@
+.dashboard-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.dashboard-content {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: inherit;
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}

@@ -1,0 +1,158 @@
+.form-container {
+  margin-top: 100px ; 
+  padding-top: 10px ; 
+  text-align: center;
+  color: black;
+}
+
+body {
+  margin-bottom: 100px;
+  padding: 0;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+header, nav, .header, .navbar {
+  margin-bottom: 10px ;
+}
+
+.form-container h1 {
+  margin-top: 0 ;
+  margin-bottom: 20px ;
+  color: black;
+}
+
+.progress-bar, .progress-container {
+  margin-top: 10px ;
+  margin-bottom: 70px ;
+}
+
+.error-message {
+  margin-top: 10px ;
+  margin-bottom: 15px ;
+}
+
+.form-section {
+  margin-bottom: 20px;
+}
+
+.form-navigation {
+  margin-top: 30px ;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.fixed.inset-0 {
+  z-index: 9999;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    margin-top: 10px ;
+    padding: 15px ;
+  }
+  
+  .form-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 15px ;
+    color: black;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    margin-top: 5px ;
+    padding: 10px ;
+  }
+}
+
+.top-aligned {
+  margin-top: 0 ;
+  padding-top: 0 ;
+}
+
+.minimal-spacing {
+  margin: 10px 0 ;
+}
+
+.super-close-to-top {
+  margin-top: 5px ;
+  padding-top: 5px ;
+}
+
+.container, .main-content, .app-container {
+  padding-top: 10px ;
+  margin-top: 0 ;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:focus{
+  outline: none;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  margin-right: -799px;
+}
+
+.btn-primary:focus{
+  outline: none;
+}
+
+.btn-primary:hover {
+  background-color: #f8fafc;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.btn-primary:disabled {
+  background-color: #c7d2fe;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  margin-left:-800px;
+  margin-right: 700px;
+}
+
+.btn-secondary :focus{
+  outline: none;
+}
+
+.btn-secondary:hover {
+  background-color: #f8fafc;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.btn-icon {
+  margin-right: 0.5rem;
+}
+
+.btn-icon:focus{
+  outline: none;
+}
