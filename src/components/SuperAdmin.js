@@ -30,6 +30,18 @@ const SuperAdminLogin = ({ onLoginSuccess }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Call this right AFTER any replace‑style navigation
+  const disableBackButton = () => {
+    // push a dummy entry so we can trap “popstate”
+    window.history.pushState(null, '', window.location.href);
+    window.onpopstate = () => {
+      // prevent going back
+      window.history.go(1);
+    };
+  };
+
+  disableBackButton();
+
   // onFinish is called when form validation succeeds
   const onFinish = async (values) => {
     setLoading(true);
@@ -108,8 +120,10 @@ const SuperAdminLogin = ({ onLoginSuccess }) => {
       }
       toast.success(`Welcome back, ${response.data.username}`);
 
+       disableBackButton();
       // Redirect to dashboard
-      navigate("/dashboard");
+      navigate("/dashboard", {replace:true});
+     
     } catch (err) {
       console.error("Login error:", err);
       

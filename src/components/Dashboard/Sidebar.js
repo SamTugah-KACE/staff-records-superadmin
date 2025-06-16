@@ -49,11 +49,15 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isDarkMode }) => {
     navigate(path);
   };
 
-  // const handleLogout = () => {
-  //   console.log('Logout clicked');
-    
-
-  // };
+  // Call this right AFTER any replace‑style navigation
+  const disableBackButton = () => {
+    // push a dummy entry so we can trap “popstate”
+    window.history.pushState(null, '', window.location.href);
+    window.onpopstate = () => {
+      // prevent going back
+      window.history.go(1);
+    };
+  };
 
   const handleLogout = async () => {
     const confirmed = window.confirm('Are you sure you want to logout?');
@@ -66,7 +70,12 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isDarkMode }) => {
       localStorage.removeItem("token_type");
       localStorage.removeItem("username");
       localStorage.removeItem("remember_me")
+      // window.location.href = "/";
+      disableBackButton();
+      // do a full reload to the domain root:
+      // window.location.replace(window.location.origin + '/');
       navigate('/',{replace: true});
+      
     } catch (error) {
       console.error('Logout error:', error);
       const errorMsg = error?.response?.data?.detail || 'An error occurred during logout';

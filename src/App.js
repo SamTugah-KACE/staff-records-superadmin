@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm';
 import AccountRecovery from './components/AccountRecovery';
@@ -53,10 +53,7 @@ function App() {
                 <SuperAdminLogin />
             } />
 
-               <Route path="/superadmin/login" element={
-              
-                <SuperAdminLogin />
-            } />
+            
 
             <Route path="/dashboard" element={
               <MainLayout>
@@ -82,6 +79,7 @@ function App() {
                 <AccountRecovery />
               </MainLayout>
             } /> 
+             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes> 
         </OrganizationProvider>
       </div>

@@ -18,6 +18,17 @@ const Dashboard = () => {
 
   const API_BASE_URL = 'https://staff-records-backend.onrender.com/api';
 
+   // Call this right AFTER any replace‑style navigation
+  const disableBackButton = () => {
+    // push a dummy entry so we can trap “popstate”
+    window.history.pushState(null, '', window.location.href);
+    window.onpopstate = () => {
+      // prevent going back
+      window.history.go(1);
+    };
+  };
+
+  disableBackButton();
   useEffect(() => {
     fetchDashboardData();
   }, []);

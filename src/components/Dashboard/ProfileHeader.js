@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IoNotifications } from "react-icons/io5";
-import profile from '../assets/im.jpg';
+import profile from '../assets/download.png';
 import NotificationModal from './Notificationbox'; 
 import './ProfileHeader.css'
 
@@ -33,7 +33,7 @@ const ProfileHeader = ({ toggleDarkMode, isDarkMode }) => {
             loading="lazy" 
           />
           <div className="profile-details">
-            <span className="profile-name">Mr. Godsmark</span>
+            {/* <span className="profile-name">Mr. Godsmark</span> */}
             <span className="profile-role">Admin</span>
           </div>
         </div>
