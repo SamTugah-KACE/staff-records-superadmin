@@ -1,4 +1,4 @@
-import logo from '../assets/image-1.png';
+import logo from '../assets/download.png';
 import { IoSunny, IoMoon } from "react-icons/io5";
 import './Header.css';
 

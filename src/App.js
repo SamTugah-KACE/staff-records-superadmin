@@ -52,6 +52,12 @@ function App() {
               
                 <SuperAdminLogin />
             } />
+
+               <Route path="/superadmin/login" element={
+              
+                <SuperAdminLogin />
+            } />
+
             <Route path="/dashboard" element={
               <MainLayout>
                 <Dashboard />
