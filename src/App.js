@@ -10,6 +10,9 @@ import Footer from './components/Dashboard/Footer';
 import { OrganizationProvider } from './components/OrganizationContext'; 
 import './App.css';
 import SuperAdminLogin from './components/SuperAdmin';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -47,6 +50,14 @@ function App() {
     <Router>
       <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
         <OrganizationProvider>
+            <ToastContainer
+    position="top-right"
+    autoClose={3000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    pauseOnHover
+  />
           <Routes>
             <Route path="/" element={
               

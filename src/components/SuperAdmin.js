@@ -1,6 +1,6 @@
 // src/components/SuperAdmin/SuperAdminLogin.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -23,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify';
 import api from "./request"; // Adjust the import path to your axios instance
 import logo from "./assets/gi-kace-logo.png"; // Adjust the import path to your logo
+import { blockBackButton } from "./Dashboard/historyBlocker";
+
 
 const { Title, Text } = Typography;
 
@@ -30,7 +32,6 @@ const SuperAdminLogin = ({ onLoginSuccess }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Call this right AFTER any replace‑style navigation
   const disableBackButton = () => {
     // push a dummy entry so we can trap “popstate”
     window.history.pushState(null, '', window.location.href);
@@ -41,6 +42,24 @@ const SuperAdminLogin = ({ onLoginSuccess }) => {
   };
 
   disableBackButton();
+   // If already logged in, send straight to dashboard
+  // useEffect(() => {
+  //   if (localStorage.getItem('access_token')) {
+  //     navigate('/dashboard', { replace: true });
+  //   }
+  // }, [navigate]);
+
+  // Call this right AFTER any replace‑style navigation
+  // const disableBackButton = () => {
+  //   // push a dummy entry so we can trap “popstate”
+  //   window.history.pushState(null, '', window.location.href);
+  //   window.onpopstate = () => {
+  //     // prevent going back
+  //     window.history.go(1);
+  //   };
+  // };
+
+  // disableBackButton();
 
   // onFinish is called when form validation succeeds
   const onFinish = async (values) => {
@@ -120,10 +139,10 @@ const SuperAdminLogin = ({ onLoginSuccess }) => {
       }
       toast.success(`Welcome back, ${response.data.username}`);
 
-       disableBackButton();
+      //  disableBackButton();
       // Redirect to dashboard
       navigate("/dashboard", {replace:true});
-     
+     blockBackButton();
     } catch (err) {
       console.error("Login error:", err);
       

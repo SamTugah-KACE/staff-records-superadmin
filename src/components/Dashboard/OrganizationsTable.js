@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './OrganizationsTable.css';
 import { FaChevronLeft, FaChevronRight, FaFilter } from 'react-icons/fa';
 import LogoModal from '../LogoModal';
+import { toast } from 'react-toastify';
+
 
 const OrganizationTable = ({ 
   organizations = [], 
@@ -89,6 +91,7 @@ const OrganizationTable = ({
 
       // If onUpdate function is provided, also update the backend
       if (onUpdate) {
+      toast.info("Implementation in progress");
         await onUpdate(selectedOrg.id, { logos: updatedLogos });
         console.log('✅ Logos updated successfully in backend');
       }
@@ -114,6 +117,7 @@ const OrganizationTable = ({
 
   // Toggle organization active status
   const toggleActive = async (orgId) => {
+  toast.info("Implementation in progress");
     if (!onUpdate) {
       console.warn('No onUpdate function provided');
       return;
@@ -138,7 +142,7 @@ const OrganizationTable = ({
       );
 
       // Update backend
-      await onUpdate(orgId, { is_active: newActiveState });
+      // await onUpdate(orgId, { is_active: newActiveState });
       console.log("Organization status updated successfully");
     } catch (err) {
       console.error("Failed to update organization status:", err);
@@ -442,8 +446,10 @@ const OrganizationTable = ({
                         <input 
                           type="checkbox" 
                           checked={org.is_active || false}
-                          onChange={() => toggleActive(org.id)}
-                          disabled={isUpdating || !onUpdate}
+                          onChange={()=>toast.info("Feature Coming soon.")}
+                          readOnly
+                          // onChange={() => toggleActive(org.id)}
+                          // disabled={isUpdating || !onUpdate}
                         />
                         <span className="toggle-slider"></span>
                       </label>

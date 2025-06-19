@@ -7,6 +7,8 @@ import './InfoCard.css';
 import './Notificationbox.css';
 import './OrganizationsTable.css';
 import './Dashboard.css';
+import { useNavigate } from 'react-router-dom';
+// import { blockBackButton } from './historyBlocker';
 
 const Dashboard = () => {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -15,6 +17,7 @@ const Dashboard = () => {
   const [dashboardStats, setDashboardStats] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+const navigate = useNavigate();
 
   const API_BASE_URL = 'https://staff-records-backend.onrender.com/api';
 
@@ -27,6 +30,14 @@ const Dashboard = () => {
       window.history.go(1);
     };
   };
+
+    // If not logged in, force back to login
+  useEffect(() => {
+    if (!localStorage.getItem('access_token')) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
+
 
   disableBackButton();
   useEffect(() => {

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FaTimes, FaUpload, FaTrash, FaStar, FaCheck, FaEdit } from 'react-icons/fa';
 import './LogoModal.css';
+import { toast } from 'react-toastify';
 
 const LogoModal = ({ 
   isOpen, 
@@ -444,8 +445,9 @@ const LogoModal = ({
           </button>
           <button 
             className="save-button" 
-            onClick={handleSave}
-            disabled={isUploading}
+            // onClick={handleSave}
+             onClick={() => toast.info("Feature coming soon.")}
+            // disabled={isUploading}
           >
             Save Changes ({selectedLogosCount} selected)
           </button>

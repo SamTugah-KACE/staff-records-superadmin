@@ -6,7 +6,8 @@ import { BsBuildingAdd } from "react-icons/bs";
 import { MdLogout } from "react-icons/md"; // Import logout icon
 import './Sidebar.css';
 import { toast } from 'react-toastify'; 
-import api from "../request";
+import request from "../request";
+import { blockBackButton } from './historyBlocker';
 
 const Sidebar = ({ isCollapsed, toggleSidebar, isDarkMode }) => {
   console.log('Sidebar rendering - isCollapsed:', isCollapsed, 'isDarkMode:', isDarkMode);
@@ -50,32 +51,40 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isDarkMode }) => {
   };
 
   // Call this right AFTER any replace‑style navigation
-  const disableBackButton = () => {
-    // push a dummy entry so we can trap “popstate”
-    window.history.pushState(null, '', window.location.href);
-    window.onpopstate = () => {
-      // prevent going back
-      window.history.go(1);
-    };
-  };
+  // const disableBackButton = () => {
+  //   // push a dummy entry so we can trap “popstate”
+  //   window.history.pushState(null, '', window.location.href);
+  //   window.onpopstate = () => {
+  //     // prevent going back
+  //     window.history.go(1);
+  //   };
+  // };
 
   const handleLogout = async () => {
     const confirmed = window.confirm('Are you sure you want to logout?');
     if (!confirmed) return;
 
     try {
-      const response = await api.post('/super-auth/superadmin/auth/logout');
-      toast.success('Logged out successfully');
-      localStorage.removeItem("access_token");
+      const response = await request.post('/super-auth/superadmin/auth/logout');
+      console.log("logout response: ", response.status);
+     
+     if(response.status === 204){
+     
+     localStorage.removeItem("access_token");
       localStorage.removeItem("token_type");
       localStorage.removeItem("username");
       localStorage.removeItem("remember_me")
+     
       // window.location.href = "/";
-      disableBackButton();
+      // disableBackButton();
       // do a full reload to the domain root:
       // window.location.replace(window.location.origin + '/');
+      toast.success('Logged out successfully');
       navigate('/',{replace: true});
-      
+      blockBackButton();
+     }else{
+      console.log("logout error response.data:: ", response.data);
+     }
     } catch (error) {
       console.error('Logout error:', error);
       const errorMsg = error?.response?.data?.detail || 'An error occurred during logout';
