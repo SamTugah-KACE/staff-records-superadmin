@@ -50,6 +50,47 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isDarkMode }) => {
     navigate(path);
   };
 
+    const LOGOUT_CONFIRMATION_MESSAGE = 'Are you sure you want to logout?';
+  const AUTH_KEYS_TO_REMOVE = [
+    'access_token',
+    'token_type', 
+    'username',
+    'login_timestamp',
+    'remember_me'
+  ];
+  const LOGOUT_REDIRECT_PATH = '/';
+    const HISTORY_BARRIER_COUNT = 10;
+
+    const clearAuthStorage = () => {
+    AUTH_KEYS_TO_REMOVE.forEach(key => localStorage.removeItem(key));
+    sessionStorage.clear();
+  };
+
+
+    const createHistoryBarrier = () => {
+    for (let i = 0; i < HISTORY_BARRIER_COUNT; i++) {
+      window.history.pushState(null, '', LOGOUT_REDIRECT_PATH);
+    }
+  };
+
+  const handleLogoutPopState = (event) => {
+    window.history.pushState(null, '', LOGOUT_REDIRECT_PATH);
+    toast.info('Please log in to access the application');
+    if (window.location.pathname !== LOGOUT_REDIRECT_PATH) {
+      window.location.replace(LOGOUT_REDIRECT_PATH);
+    }
+  };            
+
+  const cleanupPopStateHandlers = () => {
+    window.onpopstate = null;
+    if (window.logoutPopstateHandlers) {
+      window.logoutPopstateHandlers.forEach(handler => {
+        window.removeEventListener('popstate', handler);
+      });
+    }
+  };
+
+
   // Call this right AFTER any replace‑style navigation
   // const disableBackButton = () => {
   //   // push a dummy entry so we can trap “popstate”
@@ -64,17 +105,38 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isDarkMode }) => {
     const confirmed = window.confirm('Are you sure you want to logout?');
     if (!confirmed) return;
 
-    try {
-      const response = await request.post('/super-auth/superadmin/auth/logout');
+    try{
+const response = await request.post('/super-auth/superadmin/auth/logout');
       console.log("logout response: ", response.status);
+    }catch (logoutError) {
+        console.error('Server logout error:', logoutError);
+      }
+
+    try {
+    //   const response = await request.post('/super-auth/superadmin/auth/logout');
+    //   console.log("logout response: ", response.status);
      
-     if(response.status === 204){
+    //  if(response.status === 204 || response.status===200){
      
-     localStorage.removeItem("access_token");
-      localStorage.removeItem("token_type");
-      localStorage.removeItem("username");
-      localStorage.removeItem("remember_me")
-     
+    //  localStorage.removeItem("access_token");
+    //   localStorage.removeItem("token_type");
+    //   localStorage.removeItem("username");
+    //   localStorage.removeItem("remember_me")
+     clearAuthStorage();
+      toast.success('Logged out successfully');
+
+      // History management
+      window.history.replaceState(null, '', LOGOUT_REDIRECT_PATH);
+      createHistoryBarrier();
+      
+      // Event handler setup
+      cleanupPopStateHandlers();
+      window.addEventListener('popstate', handleLogoutPopState);
+      window.logoutPopstateHandlers = [handleLogoutPopState];
+
+      // Redirect
+      window.location.replace(LOGOUT_REDIRECT_PATH);
+
       // window.location.href = "/";
       // disableBackButton();
       // do a full reload to the domain root:
@@ -82,9 +144,9 @@ const Sidebar = ({ isCollapsed, toggleSidebar, isDarkMode }) => {
       toast.success('Logged out successfully');
       navigate('/',{replace: true});
       blockBackButton();
-     }else{
-      console.log("logout error response.data:: ", response.data);
-     }
+    //  }else{
+    //   console.log("logout error response.data:: ", response.data);
+    //  }
     } catch (error) {
       console.error('Logout error:', error);
       const errorMsg = error?.response?.data?.detail || 'An error occurred during logout';
