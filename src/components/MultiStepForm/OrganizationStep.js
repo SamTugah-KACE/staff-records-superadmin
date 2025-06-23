@@ -170,8 +170,10 @@ export default function OrganizationStep({ register, errors, logoFiles, onLogoUp
             }`}
           >
             <option value="">Select...</option>
-            <option value="Single Managed">Single Managed</option>
-            <option value="Branch Managed">Branch Managed</option>
+            <option value="NGO">NGO</option>
+            <option value="Government">Government</option>
+            <option value="private">Private</option>
+            
           </select>
           {errors.org_type && (
             <span className="error-message text-red-500 text-sm">{errors.org_type.message}</span>
@@ -187,9 +189,8 @@ export default function OrganizationStep({ register, errors, logoFiles, onLogoUp
             }`}
           >
             <option value="">Select...</option>
-            <option value="NGO">NGO</option>
-            <option value="Government">Government</option>
-            <option value="private">Private</option>
+            <option value="Single Managed">Single Managed</option>
+            <option value="Branch Managed">Branch Managed</option>
           </select>
           {errors.organization_nature && (
             <span className="error-message text-red-500 text-sm">{errors.organization_nature.message}</span>
