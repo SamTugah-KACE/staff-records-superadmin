@@ -172,7 +172,7 @@ export default function OrganizationStep({ register, errors, logoFiles, onLogoUp
             <option value="">Select...</option>
             <option value="NGO">NGO</option>
             <option value="Government">Government</option>
-            <option value="private">Private</option>
+            <option value="Private">Private</option>
             
           </select>
           {errors.org_type && (
